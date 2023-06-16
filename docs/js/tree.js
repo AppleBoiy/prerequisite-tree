@@ -41,7 +41,7 @@ const main = () => {
 
         })
         .catch(error => console.log(error));
-	const spreadsheetUrl = "https://docs.google.com/spreadsheets/d/1t8dvUUdvOxdiKQv5nagGaHyiw3P-C2o0Qg6C_1Tlq58/edit?usp=sharing";
+	// const spreadsheetUrl = "https://docs.google.com/spreadsheets/d/1t8dvUUdvOxdiKQv5nagGaHyiw3P-C2o0Qg6C_1Tlq58/edit?usp=sharing";
 
 	// Convert the spreadsheet to JSON
 	spreadsheetToJson(spreadsheetUrl)
@@ -129,6 +129,7 @@ async function spreadsheetToJson(url) {
     };
 
     result.forEach(element => {
+        element.code = element.code.toString();
         element.parent = parseValue(element.parent);
         element.children = parseValue(element.children);
     });
@@ -213,6 +214,12 @@ function getNodeAncestors(abbreviation) {
  * @param mode
  */
 function highlightRectangle(abbreviation, mode = "") {
+    // add tipBox
+    const tips = document.createElement("span");
+    tips.classList.add("tips-box");
+    tips.innerHTML = `${courseData[abbreviation].code}`
+    console.log(tips)
+    //
     const rectData = rectangleData[abbreviation];
     const {highlightFill, highlightStroke, originalFill, originalStroke, fadedFill, fadedStroke} = rectData;
     const rectangle = rectData.rectangleDiv;
@@ -292,10 +299,9 @@ function attachEventHandlers(abbreviation, nodeElement) {
         event.preventDefault();
         popup.style.display = "flex";
         const [courseName, courseContent] = popup.children[0].children;
-
         courseName.innerHTML = courseData[abbreviation]["full name (ENG)"];
         courseContent.innerHTML = `
-      Prerequisite: ${courseData[abbreviation]["parent"] || "-"}<br>
+      Prerequisite: ${courseData[abbreviation]["parent"].length === 0 ? "-" : courseData[abbreviation]["parent"]}<br>
       Credit: ${courseData[abbreviation]["credit"]}<br>
       Details: ....`;
     };

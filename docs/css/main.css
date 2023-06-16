@@ -1,6 +1,21 @@
+:root {
+    --bg: #E8F3D6;
+    --year1: #FAAB78;
+    --year2: #F8C4B4;
+    --year3: #E5EBB2;
+    --year4: #BCE29E;
+    --bgHoverNode: #ff9752;
+    --borderHoverNode: #2C3333;
+    --highlight-fill: #ccc;
+    --highlight-stroke: #ccc;
+    --font-style: Arial, Helvetica, sans-serif;
+}
+
 body {
+    display: flex;
+    flex-direction: column;
     height: 100vh;
-    background-color: #F9E0BB;
+    background-color: var(--bg);
 }
 
 nav {
@@ -39,4 +54,5 @@ img.tw-user-medium {
 
 .container {
     display: flex;
+    font-family: var(--font-style);
 }
