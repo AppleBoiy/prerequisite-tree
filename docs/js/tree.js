@@ -2,6 +2,8 @@ const rectangleData = {};
 const courseData = {};
 const courseList = [];
 const edgesList = [];
+// new item
+const planDict = {}
 
 const main = () => {
     const spreadsheetUrl = "https://docs.google.com/spreadsheets/d/1t8dvUUdvOxdiKQv5nagGaHyiw3P-C2o0Qg6C_1Tlq58/edit?usp=sharing";
@@ -14,6 +16,10 @@ const main = () => {
                 const abbreviation = subject.abbr;
                 rectangleData[abbreviation] = {};
                 courseData[abbreviation] = subject;
+                // plan sort
+                const planner = subject["plan requirement"];
+                planDict[planner] === undefined ? planDict[planner] = [subject] : planDict[planner].push(subject);
+                
             }
 
             const nodeDivs = document.getElementsByClassName("node");
@@ -36,12 +42,44 @@ const main = () => {
                 const {nodeDiv} = rectData;
                 attachEventHandlers(abbreviation, nodeDiv);
             }
+            
+            // switch plan
+            // switchPlan(planDict);
 
+            // add tipsBox
+            // addTipsBox(nodeDivs, cousrseData);
 
         })
         .catch(error => console.log(error));
 };
+// new function in progress
+function switchPlan(planDict) {
+    console.log(planDict)
+    const regular = document.getElementsByClassName("edgePath from204491-204499")
+    console.log(test)
+    test[0].style.display = "none"
+    const change = document.getElementById("change");
+    // console.log(change)
+    change.addEventListener("click", (e => {
+        
+    }))
+}
 
+// new function in progress
+function addTipsBox(nodeElement, course) {
+    console.log(nodeElement)
+    // add tipBox
+    const tips = document.createElement("span");
+    tips.classList.add("tips-box");
+    
+    Array.from(nodeElement).forEach(element => {
+        tips.innerHTML = `${course[element.id].code}`
+        element.appendChild(tips)
+        console.log(element)
+    })
+    // console.log(tips)
+    
+}
 /**
  * Fetches a spreadsheet from the provided URL and converts it to JSON format.
  * Each row in the spreadsheet becomes an object in the resulting array.
@@ -118,7 +156,7 @@ async function generateTreeView(rawData) {
 
         subject.children.forEach(child => {
             mainTree.setEdge(subject.code, child, {
-                class: `${subject.code}-${child}`
+                class: `from${subject.code}-${child}`
             });
         });
 
@@ -129,6 +167,7 @@ async function generateTreeView(rawData) {
     mainTree.nodes().forEach(v => {
         const node = mainTree.node(v);
         Object.assign(node, {rx: 10, ry: 10});
+        
     });
 
 
@@ -177,12 +216,7 @@ function getNodeAncestors(abbreviation) {
  * @param mode
  */
 function highlightRectangle(abbreviation, mode = "") {
-    // add tipBox
-    const tips = document.createElement("span");
-    tips.classList.add("tips-box");
-    tips.innerHTML = `${courseData[abbreviation].code}`
-    console.log(tips)
-    //
+    
     const rectData = rectangleData[abbreviation];
     const {highlightFill, highlightStroke, originalFill, originalStroke} = rectData;
     const rectangle = rectData.rectangleDiv;
@@ -191,12 +225,14 @@ function highlightRectangle(abbreviation, mode = "") {
         case "enter":
             rectangle.style.fill = highlightFill;
             rectangle.style.stroke = highlightStroke;
+            rectangle.style.scale = "1.1";
             break;
 
         case "leave":
             rectangle.style.fill = originalFill;
             rectangle.style.stroke = originalStroke;
             rectangle.style.opacity = "1";
+            rectangle.style.scale = "1";
             break;
 
         default:
@@ -288,8 +324,8 @@ function attachEventHandlers(abbreviation, nodeEl) {
     });
 
     // Add custom styles to the node element
-    nodeEl.style.cursor = "pointer";
-    nodeEl.style.transition = "background-color 3s ease";
+    // nodeEl.style.cursor = "pointer";
+    // nodeEl.style.transition = "background-color 0.2s ease";
 
     nodeEl.addEventListener("mouseenter", handleMouseEnter);
     nodeEl.addEventListener("mouseleave", handleMouseLeave);

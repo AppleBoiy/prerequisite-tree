@@ -15,13 +15,36 @@
 header {
     background-color: var(--bg);
     margin-bottom: 0px;
-    padding-top: 10px;
+    padding-top: 20px;
+    padding-left: 60px;
     display: flex;
     flex-direction: column;
-    font-family: var(--font-style);
+    text-align: center;
+    /* font-family: var(--font-style); */
+    /* color: #37322ce6; */
 }
+.swicthPlan {
+    display: flex;
+    flex-direction: row;
+}
+.swicth {
+    background-color: rgb(216, 216, 216);
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    font-weight: bold;
+    color: #252525e1;
+    border-radius: 5px;
+    border-width: 0.5px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+.swicth:hover {
+    background-color: rgb(180, 180, 180);
+    color: #252525e1;
+    border-radius: 5px;
+    border-width: 1.5px;
+    scale: 1.1;
 
-
+}
 
 /* Tree */
 .tree {
@@ -46,6 +69,7 @@ header {
     stroke: #2C3333;
     fill: #2C3333;
     stroke-width: 2px;
+    transition: all 0.2s ease-in-out;
 
 }
 
@@ -54,7 +78,7 @@ header {
     position: relative;
     cursor: pointer;
 }
-.node .tips-box {
+/* .node .tips-box {
     visibility: hidden;
     width: 160px;
     background-color: #555;
@@ -67,9 +91,9 @@ header {
     bottom: 125%;
     left: 50%;
     margin-left: -80px;
-}
+} */
 
-.node .tips-box::after {
+/* .node .tips-box::after {
     content: "";
     position: absolute;
     top: 100%;
@@ -78,7 +102,7 @@ header {
     border-width: 5px;
     border-style: solid;
     border-color: #555 transparent transparent transparent;
-}
+} */
 .popup .show {
     visibility: visible;
     -webkit-animation: fadeIn 0.2s;
@@ -125,13 +149,11 @@ header {
     fill: #2C3333;
     stroke-width: 2px;
 }
-.graph .edgePath.CS111 path {
-    stroke: #333;
-    fill: #333;
-}
+
 /* Arrowhead */
 .graph .edgePath marker path {
     stroke: none;
+    /* fill: none; */
 }
 
 .treeContainer{
