@@ -33,8 +33,8 @@ const main = () => {
                     nodeDiv: div,
                     originalFill: rect.style.fill,
                     originalStroke: rect.style.stroke,
-                    highlightFill: "#03fc88",
-                    highlightStroke: "#03fc88"
+                    highlightFill: "#eb8f34",
+                    highlightStroke: "#000"
                 });
             });
 
@@ -188,7 +188,6 @@ async function generateTreeView(rawData) {
             rect: edge
         });
     }
-
 }
 
 /**
@@ -300,13 +299,15 @@ function attachEventHandlers(abbreviation, nodeEl) {
 
     const handleMouseClick = (event) => {
         event.preventDefault();
-        popup.style.display = "flex";
-        const [courseName, courseContent] = popup.children[0].children;
-        courseName.innerHTML = courseData[abbreviation]["full name (ENG)"];
-        courseContent.innerHTML = `
-      Prerequisite: ${courseData[abbreviation]["parent"].length === 0 ? "-" : courseData[abbreviation]["parent"]}<br>
-      Credit: ${courseData[abbreviation]["credit"]}<br>
-      Details: ....`;
+        popupEl.style.display = "flex";
+        const [nameEl, contentEl] = popupEl.children[0].children;
+
+        nameEl.innerHTML = data["full name (ENG)"];
+        let courseContent = "";
+        for (const [key, value] of Object.entries(courseData[abbreviation])) {
+            courseContent += key + " : " + value + "<br/>"
+        }
+        contentEl.innerHTML = courseContent;
 
         nodeEl.removeEventListener("mouseleave", handleMouseLeave);
         handleMouseEnter();
